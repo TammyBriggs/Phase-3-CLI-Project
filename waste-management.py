@@ -56,12 +56,10 @@ def main():
 
         if choice == 1:
             add_bus()
-            print("Adding a bus")
             break
 
         elif choice == 2:
             lookup_bus()
-            print("Looking for a bus")
             break
 
         elif choice == 3:
