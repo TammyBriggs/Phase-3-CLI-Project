@@ -63,32 +63,32 @@ def main():
             break
 
         elif choice == 3:
-            print("Displaying all buses")
+            display_all_buses()
             break
 
-        elif choice == 4:
-            print("Adding a route")
-            break
+        # elif choice == 4:
+        #     add_route()
+        #     break
 
-        elif choice == 5:
-            print("Looking for a route")
-            break
+        # elif choice == 5:
+        #     lookup_route()
+        #     break
 
-        elif choice == 6:
-            print("Displaying all routes")
-            break
+        # elif choice == 6:
+        #     display_all_routes()
+        #     break
 
-        elif choice == 7:
-            print("Adding a driver")
-            break
+        # elif choice == 7:
+        #     add_driver()
+        #     break
 
-        elif choice == 8:
-            print("Looking for a driver")
-            break
+        # elif choice == 8:
+        #     lookup_driver()
+        #     break
 
-        elif choice == 9:
-            print("Displaying all drivers")
-            break
+        # elif choice == 9:
+        #     display_all_drivers()
+        #     break
 
         elif choice == 10:
             print("Quitting Program")
@@ -130,6 +130,16 @@ def lookup_bus():
         print("Datetime:", bus.datetime)
     else:
         print("Bus not found!")
+
+def display_all_buses():
+    buses = session.query(Bus).all()
+    print("All Buses:")
+    for bus in buses:
+        print("Plate Number:", bus.plate_number)
+        print("Route Path:", bus.route.path)
+        print("Driver Name:", bus.driver.name)
+        print("Datetime:", bus.datetime)
+        print()
 
 # Entry point
 if __name__ == '__main__':
