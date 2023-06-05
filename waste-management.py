@@ -27,7 +27,7 @@ class Bus(Base):
 class Route(Base):
     __tablename__ = 'routes'
     id = Column(Integer, primary_key=True)
-    name = Column(String(100))
+    path = Column(String(100))
     buses = relationship("Bus", back_populates="route")
 
 
@@ -98,10 +98,21 @@ def main():
 
 def add_bus():
     plate_number = input("Enter the plate number of the bus: ")
-    route_id = int(input("Enter the route ID of the bus: "))
-    driver_id = int(input("Enter the driver ID of the bus: "))
+    driver_name = input("Enter the name of the driver: ")
+    route_path = input("Enter the route path (e.g., here - here): ")
+    driver = session.query(Driver).filter_by(name=driver_name).first()
+    if driver is None:
+        driver = Driver(name=driver_name)
+        session.add(driver)
+        session.commit()
 
-    bus = Bus(plate_number=plate_number, route_id=route_id, driver_id=driver_id)
+    route = session.query(Route).filter_by(path=route_path).first()
+    if route is None:
+        route = Route(path=route_path)
+        session.add(route)
+        session.commit()
+
+    bus = Bus(plate_number=plate_number, route=route, driver=driver)
     session.add(bus)
     session.commit()
     print("Bus added successfully!")
@@ -114,8 +125,8 @@ def lookup_bus():
     if bus:
         print("Bus found!")
         print("Plate Number:", bus.plate_number)
-        print("Route ID:", bus.route_id)
-        print("Driver ID:", bus.driver_id)
+        print("Route Path:", bus.route.path)
+        print("Driver Name:", bus.driver.name)
         print("Datetime:", bus.datetime)
     else:
         print("Bus not found!")
