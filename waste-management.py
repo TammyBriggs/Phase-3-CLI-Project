@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 
 # Database setup
-engine = create_engine('sqlite:///transportation.db')
+engine = create_engine('sqlite:///waste-management.db')
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
@@ -57,7 +57,7 @@ while choice !=10:
         print("Adding a bus")
 
     elif choice == 2:
-        print("")
+        print("Looking for a bus")
 
 
 # Entry point
