@@ -110,20 +110,14 @@ def main():
 #CLI Menu Methods
 def add_bus():
     plate_number = input("Enter the plate number of the bus: ")
-    driver_name = input("Enter the name of the driver: ")
-    route_path = input("Enter the route path (e.g., here - here): ")
-
+    
     # Check if the bus with the given plate number already exists
     existing_bus = session.query(Bus).filter_by(plate_number=plate_number).first()
     if existing_bus:
         print("Error: Bus with the same plate number already exists!")
         return
 
-    # Check if the route with the given path already exists
-    existing_route = session.query(Route).filter_by(path=route_path).first()
-    if existing_route:
-        print("Error: Route with the same path already exists!")
-        return
+    driver_name = input("Enter the name of the driver: ")
 
     # Check if the driver is already assigned to three buses
     driver = session.query(Driver).filter_by(name=driver_name).first()
@@ -136,6 +130,14 @@ def add_bus():
         driver = Driver(name=driver_name)
         session.add(driver)
         session.commit()
+
+    route_path = input("Enter the route path (e.g., here - here): ")
+    
+    # Check if the route with the given path already exists
+    existing_route = session.query(Route).filter_by(path=route_path).first()
+    if existing_route:
+        print("Error: Route with the same path already exists!")
+        return
 
     route = Route(path=route_path)
     session.add(route)
@@ -196,6 +198,7 @@ def delete_bus():
         print("Bus and associated driver and route deleted successfully!")
     else:
         print("Error: Bus not found!")
+
 
 def display_all_buses():
     buses = session.query(Bus).all()
