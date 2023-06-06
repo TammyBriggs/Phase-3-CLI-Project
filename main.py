@@ -209,7 +209,6 @@ def display_all_buses():
         print("Datetime:", formatted_datetime)
         print()
 
-
 # Entry point
 if __name__ == '__main__' or __file__ == 'main.py':
     Base.metadata.create_all(engine)
