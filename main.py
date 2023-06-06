@@ -22,7 +22,7 @@ class Bus(Base):
     route = relationship("Route", back_populates="buses")
     driver_id = Column(Integer, ForeignKey('drivers.id'))
     driver = relationship("Driver", back_populates="buses")
-    datetime = Column(DateTime, default=datetime.utcnow)
+    datetime = Column(String(16), default=datetime.utcnow)
 
 class Route(Base):
     __tablename__ = 'routes'
@@ -116,7 +116,9 @@ def add_bus():
         session.add(route)
         session.commit()
 
-    bus = Bus(plate_number=plate_number, route=route, driver=driver)
+    now = datetime.utcnow()
+    datetime_str = now.strftime("%Y-%m-%d %H:%M")
+    bus = Bus(plate_number=plate_number, route=route, driver=driver, datetime=datetime_str)
     session.add(bus)
     session.commit()
     print("Bus added successfully!")
@@ -142,7 +144,9 @@ def display_all_buses():
         print("Plate Number:", bus.plate_number)
         print("Route Path:", bus.route.path)
         print("Driver Name:", bus.driver.name)
-        print("Datetime:", bus.datetime)
+        datetime_obj = datetime.strptime(bus.datetime, "%Y-%m-%d %H:%M")
+        formatted_datetime = datetime_obj.strftime("%Y-%m-%d %H:%M")
+        print("Datetime:", formatted_datetime)
         print()
 
 # Entry point
