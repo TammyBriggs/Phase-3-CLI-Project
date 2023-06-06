@@ -37,6 +37,7 @@ class Driver(Base):
     name = Column(String(100))
     buses = relationship("Bus", back_populates="driver")
 
+#CLI Menu
 @click.command()
 def main():
     choice = 0
@@ -44,11 +45,11 @@ def main():
         print("*** Waste Disposal Management ***")
         print("1) Add a bus")
         print("2) Lookup a bus")
-        print("3) Display all buses")
-        print("4) Add a Route")
-        print("5) Lookup a Route")
-        print("6) Display all routes")
-        print("7) Add a driver")
+        print("3) Update a bus")
+        print("4) Delete a bus")
+        print("5) Display all buses")
+        print("6) Lookup a Route")
+        print("7) Display all routes")
         print("8) Lookup a driver")
         print("9) Display all drivers")
         print("10) Quit")
@@ -63,15 +64,13 @@ def main():
             break
 
         elif choice == 3:
-            display_all_buses()
             break
 
-        # elif choice == 4:
-        #     add_route()
-        #     break
+        elif choice == 4:
+            break
 
         # elif choice == 5:
-        #     lookup_route()
+        #     display_all_buses()
         #     break
 
         # elif choice == 6:
@@ -96,6 +95,7 @@ def main():
 
     print("Program Terminated")
 
+#CLI Menu Methods
 def add_bus():
     plate_number = input("Enter the plate number of the bus: ")
     driver_name = input("Enter the name of the driver: ")
