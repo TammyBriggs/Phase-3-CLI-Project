@@ -1,5 +1,4 @@
 # Necessary Imports
-import click
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -38,7 +37,6 @@ class Driver(Base):
     buses = relationship("Bus", back_populates="driver")
 
 #CLI Menu
-@click.command()
 def main():
     choice = 0
     while choice !=12:
@@ -77,9 +75,9 @@ def main():
             display_all_buses()
             break
 
-        # elif choice == 6:
-        #     lookup_route()
-        #     break
+        elif choice == 6:
+            lookup_route()
+            break
 
         # elif choice == 7:
         #     update_bus_route()
@@ -211,6 +209,17 @@ def display_all_buses():
         formatted_datetime = datetime_obj.strftime("%Y-%m-%d %H:%M")
         print("Datetime:", formatted_datetime)
         print()
+
+def lookup_route():
+    route_path = input("Enter the route path to lookup: ")
+    route = session.query(Route).filter_by(path=route_path).first()
+
+    if route:
+        print("Route found!")
+        print("Route ID:", route.id)
+        print("Route Path:", route.path)
+    else:
+        print("Route not found!")
 
 # Entry point
 if __name__ == '__main__' or __file__ == 'main.py':
