@@ -1,3 +1,4 @@
+# Necessary Imports
 import click
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -41,18 +42,20 @@ class Driver(Base):
 @click.command()
 def main():
     choice = 0
-    while choice !=10:
+    while choice !=12:
         print("*** Waste Disposal Management ***")
         print("1) Add a bus")
         print("2) Lookup a bus")
-        print("3) Update a bus")
+        print("3) Update a bus plate number")
         print("4) Delete a bus")
         print("5) Display all buses")
         print("6) Lookup a Route")
-        print("7) Display all routes")
-        print("8) Lookup a driver")
-        print("9) Display all drivers")
-        print("10) Quit")
+        print("7) Update a bus route")
+        print("8) Display all routes")
+        print("9) Lookup a driver")
+        print("10) Update a bus driver")
+        print("11) Display all drivers")
+        print("12) Quit")
         choice = int(input())
 
         if choice == 1:
@@ -69,27 +72,28 @@ def main():
         elif choice == 4:
             break
 
-        # elif choice == 5:
-        #     display_all_buses()
-        #     break
+        elif choice == 5:
+            break
 
-        # elif choice == 6:
-        #     display_all_routes()
-        #     break
+        elif choice == 6:
+            break
 
-        # elif choice == 7:
-        #     add_driver()
-        #     break
+        elif choice == 7:
+            break
 
-        # elif choice == 8:
-        #     lookup_driver()
-        #     break
+        elif choice == 8:
+            break
 
-        # elif choice == 9:
-        #     display_all_drivers()
-        #     break
+        elif choice == 9:
+            break
 
         elif choice == 10:
+            break
+
+        elif choice == 11:
+            break
+
+        elif choice == 12:
             print("Quitting Program")
             break
 
