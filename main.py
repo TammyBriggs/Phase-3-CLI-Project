@@ -13,7 +13,6 @@ Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()
 
-
 # Models
 class Bus(Base):
     __tablename__ = 'buses'
@@ -73,6 +72,7 @@ def main():
             break
 
         elif choice == 5:
+            display_all_buses()
             break
 
         elif choice == 6:
@@ -146,6 +146,6 @@ def display_all_buses():
         print()
 
 # Entry point
-if __name__ == '__main__':
+if __name__ == '__main__' or __file__ == 'main.py':
     Base.metadata.create_all(engine)
     main()
