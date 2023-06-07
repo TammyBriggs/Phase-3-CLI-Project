@@ -243,28 +243,23 @@ def lookup_route():
         print("Route not found!")
 
 def update_route():
-    plate_number = input("Enter the plate number of the bus to update the route: ")
-    bus = session.query(Bus).filter_by(plate_number=plate_number).first()
+    route_path = input("Enter the route path to update: ")
+    route = session.query(Route).filter_by(path=route_path).first()
 
-    if bus:
-        print("Existing Route Path:", bus.route.path)
-        new_route_path = input("Enter the new route path: ")
-        existing_route = session.query(Route).filter_by(path=new_route_path).first()
+    if not route:
+        print("Error: Route not found!")
+        return
 
-        if existing_route:
-            print("Error: The new route path already exists!")
-        else:
-            route = session.query(Route).filter_by(path=new_route_path).first()
+    new_route_path = input("Enter the new route path: ")
+    existing_route = session.query(Route).filter_by(path=new_route_path).first()
 
-            if route:
-                bus.route = route
-                session.commit()
-                print("Bus route updated successfully!")
-            else:
-                print("Error: Route not found!")
+    if existing_route:
+        print("Error: Another route already has the new route path.")
     else:
-        print("Error: Bus not found!")
-
+        route.path = new_route_path
+        session.commit()
+        print("Route path updated successfully!")
+    
 def display_all_routes():
     routes = session.query(Route).all()
     print("All Routes:")
