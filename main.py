@@ -87,9 +87,9 @@ def main():
                 lookup_route()
                 break
 
-            # elif choice == 7:
-            #     update_bus_route()
-            #     break
+            elif choice == 7:
+                update_route()
+                break
 
             elif choice == 8:
                 display_all_routes()
@@ -100,7 +100,7 @@ def main():
                 break
 
             elif choice == 10:
-                update_bus_driver()
+                update_driver()
                 break
 
             elif choice == 11:
@@ -242,28 +242,28 @@ def lookup_route():
     else:
         print("Route not found!")
 
-# def update_bus_route():
-#     plate_number = input("Enter the plate number of the bus to update the route: ")
-#     bus = session.query(Bus).filter_by(plate_number=plate_number).first()
+def update_route():
+    plate_number = input("Enter the plate number of the bus to update the route: ")
+    bus = session.query(Bus).filter_by(plate_number=plate_number).first()
 
-#     if bus:
-#         print("Existing Route Path:", bus.route.path)
-#         new_route_path = input("Enter the new route path: ")
-#         existing_route = session.query(Route).filter_by(path=new_route_path).first()
+    if bus:
+        print("Existing Route Path:", bus.route.path)
+        new_route_path = input("Enter the new route path: ")
+        existing_route = session.query(Route).filter_by(path=new_route_path).first()
 
-#         if existing_route:
-#             print("Error: The new route path already exists!")
-#         else:
-#             route = session.query(Route).filter_by(path=new_route_path).first()
+        if existing_route:
+            print("Error: The new route path already exists!")
+        else:
+            route = session.query(Route).filter_by(path=new_route_path).first()
 
-#             if route:
-#                 bus.route = route
-#                 session.commit()
-#                 print("Bus route updated successfully!")
-#             else:
-#                 print("Error: Route not found!")
-#     else:
-#         print("Error: Bus not found!")
+            if route:
+                bus.route = route
+                session.commit()
+                print("Bus route updated successfully!")
+            else:
+                print("Error: Route not found!")
+    else:
+        print("Error: Bus not found!")
 
 def display_all_routes():
     routes = session.query(Route).all()
@@ -284,21 +284,24 @@ def lookup_driver():
     else:
         print("Driver not found!")
 
-def update_bus_driver():
-    plate_number = input("Enter the plate number of the bus to update the driver: ")
-    new_driver_name = input("Enter the name of the new driver: ")
-    bus = session.query(Bus).filter_by(plate_number=plate_number).first()
-    driver = session.query(Driver).filter_by(name=new_driver_name).first()
+def update_driver():
+    driver_name = input("Enter the name of the driver: ")
+    driver = session.query(Driver).filter_by(name=driver_name).first()
 
-    if bus:
-        if driver:
-            bus.driver = driver
-            session.commit()
-            print("Bus driver updated successfully!")
+    if driver:
+        new_driver_name = input("Enter the new driver name: ")
+        if driver_name == new_driver_name:
+            print("Error: The new driver name is the same as the existing name!")
+            return
+        new_driver = session.query(Driver).filter_by(name=new_driver_name).first()
+        if new_driver:
+            print("Error: Another driver already has the new driver name.")
         else:
-            print("Driver not found!")
+            driver.name = new_driver_name
+            session.commit()
+            print("Driver name updated successfully!")
     else:
-        print("Bus not found!")
+        print("Error: Driver not found!")
 
 def display_all_drivers():
     drivers = session.query(Driver).all()
