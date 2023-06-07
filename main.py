@@ -1,6 +1,6 @@
 # Necessary Imports
 import click
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, func
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
@@ -134,14 +134,22 @@ def main():
             print("1) Generate a report on the buisiest driver(s) and how many buses they're driving")
             print("2) Generate a report on the date with the most active buses")
             print("3) Quit")
-        sub_choice = int(input())
+
+            while True:
+                try:
+                    sub_choice = int(input("Enter your choice: "))
+                    if sub_choice not in [1, 2, 3]:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("Invalid choice. Please try again.")
 
         if sub_choice == 1:
-            generate_busiest_driver_report()
+            busiest_driver()
             break
 
         elif sub_choice == 2:
-            generate_most_active_buses_report()
+            day_with_most_active_buses()
             break
 
         elif sub_choice == 3:
@@ -153,7 +161,7 @@ def main():
 
     print("Program Terminated")
 
-#CLI Menu Methods
+#CLI Waste-Management DBMS Menu Methods
 def add_bus():
     plate_number = input("Enter the plate number of the bus: ")
     
@@ -340,6 +348,32 @@ def display_all_drivers():
         print("Driver ID:", driver.id)
         print("Driver Name:", driver.name)
         print()
+
+#CLI Reports Methods
+def busiest_driver():
+    drivers = session.query(Driver).all()
+    busiest_driver = max(drivers, key=lambda driver: len(driver.buses))
+
+    print("*** Busiest Driver ***")
+    print("Driver Name:", busiest_driver.name)
+    print("Number of Buses Assigned:", len(busiest_driver.buses))
+
+def day_with_most_active_buses():
+    buses = session.query(Bus).all()
+
+    # Extract the date from the datetime field of each bus
+    bus_dates = [bus.datetime.split()[0] for bus in buses]
+
+    # Use Counter to count the occurrences of each date
+    date_counts = Counter(bus_dates)
+
+    # Find the date with the maximum count
+    most_active_date = max(date_counts, key=date_counts.get)
+    active_bus_count = date_counts[most_active_date]
+
+    print("*** Day with the most active Buses ***")
+    print("Date:", most_active_date)
+    print("Active Buses:", active_bus_count)
 
 # Entry point
 if __name__ == '__main__' or __file__ == 'main.py':
