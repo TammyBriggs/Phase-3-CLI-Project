@@ -6,6 +6,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from collections import Counter
 
 # Database setup
 engine = create_engine('sqlite:///waste-management.db')
