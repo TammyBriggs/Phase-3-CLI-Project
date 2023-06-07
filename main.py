@@ -112,9 +112,24 @@ def main():
                 break
 
         elif choice == 2:
-            print("Reports")
-            # Add your code for reports here
+
+            print("*** Report Generation ***")
+            print("1) Generate a report on the buisiest driver(s) and how many buses they're driving")
+            print("2) Generate a report on the date with the most active buses")
+            print("3) Quit")
+        sub_choice = int(input())
+
+        if sub_choice == 1:
+            # Generate busiest driver report
+            generate_busiest_driver_report()
+        elif sub_choice == 2:
+            # Generate most active buses report
+            generate_most_active_buses_report()
+        elif sub_choice == 3:
+            print("Returning to the main menu.")
             break
+        else:
+            print("Invalid choice. Please try again.")
 
     print("Program Terminated")
 
