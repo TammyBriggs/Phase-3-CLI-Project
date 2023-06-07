@@ -69,7 +69,16 @@ def main():
             print("10) Update a bus driver")
             print("11) Display all drivers")
             print("12) Quit")
-            choice = int(input())
+            # choice = int(input())
+
+            while True:
+                try:
+                    choice = int(input("Enter your choice: "))
+                    if choice not in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("Invalid choice. Please try again.")
 
             if choice == 1:
                 add_bus()
