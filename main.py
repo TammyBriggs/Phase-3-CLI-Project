@@ -1,8 +1,9 @@
 # Necessary Imports
+import click
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
 
@@ -36,71 +37,83 @@ class Driver(Base):
     name = Column(String(100))
     buses = relationship("Bus", back_populates="driver")
 
-#CLI Menu
+# CLI Menu
+@click.command()
 def main():
     choice = 0
-    while choice !=12:
+    while choice != 12:
         print("*** Waste Disposal Management ***")
-        print("1) Add a bus")
-        print("2) Lookup a bus")
-        print("3) Update a bus plate number")
-        print("4) Delete a bus")
-        print("5) Display all buses")
-        print("6) Lookup a Route")
-        print("7) Update a bus route")
-        print("8) Display all routes")
-        print("9) Lookup a driver")
-        print("10) Update a bus driver")
-        print("11) Display all drivers")
-        print("12) Quit")
+        print("1) Waste-Management DBMS Menu")
+        print("2) Reports")
         choice = int(input())
 
         if choice == 1:
-            add_bus()
-            break
+            print("*** Waste Disposal Management ***")
+            print("1) Add a bus")
+            print("2) Lookup a bus")
+            print("3) Update a bus plate number")
+            print("4) Delete a bus")
+            print("5) Display all buses")
+            print("6) Lookup a Route")
+            print("7) Update a bus route")
+            print("8) Display all routes")
+            print("9) Lookup a driver")
+            print("10) Update a bus driver")
+            print("11) Display all drivers")
+            print("12) Quit")
+            choice = int(input())
+
+            if choice == 1:
+                add_bus()
+                break
+
+            elif choice == 2:
+                lookup_bus()
+                break
+
+            elif choice == 3:
+                update_bus_plate_number()
+                break
+
+            elif choice == 4:
+                delete_bus()
+                break
+
+            elif choice == 5:
+                display_all_buses()
+                break
+
+            elif choice == 6:
+                lookup_route()
+                break
+
+            # elif choice == 7:
+            #     update_bus_route()
+            #     break
+
+            elif choice == 8:
+                display_all_routes()
+                break
+
+            elif choice == 9:
+                lookup_driver()
+                break
+
+            elif choice == 10:
+                update_bus_driver()
+                break
+
+            elif choice == 11:
+                display_all_drivers()
+                break
+
+            elif choice == 12:
+                print("Quitting Program")
+                break
 
         elif choice == 2:
-            lookup_bus()
-            break
-
-        elif choice == 3:
-            update_bus_plate_number()
-            break
-
-        elif choice == 4:
-            delete_bus()
-            break
-
-        elif choice == 5:
-            display_all_buses()
-            break
-
-        elif choice == 6:
-            lookup_route()
-            break
-
-        # elif choice == 7:
-        #     update_bus_route()
-        #     break
-
-        elif choice == 8:
-            display_all_routes()
-            break
-
-        elif choice == 9:
-            lookup_driver()
-            break
-
-        # elif choice == 10:
-        #     update_bus_driver()
-        #     break
-
-        elif choice == 11:
-            display_all_drivers()
-            break
-
-        elif choice == 12:
-            print("Quitting Program")
+            print("Reports")
+            # Add your code for reports here
             break
 
     print("Program Terminated")
@@ -271,21 +284,21 @@ def lookup_driver():
     else:
         print("Driver not found!")
 
-# def update_bus_driver():
-#     plate_number = input("Enter the plate number of the bus to update the driver: ")
-#     new_driver_name = input("Enter the name of the new driver: ")
-#     bus = session.query(Bus).filter_by(plate_number=plate_number).first()
-#     driver = session.query(Driver).filter_by(name=new_driver_name).first()
+def update_bus_driver():
+    plate_number = input("Enter the plate number of the bus to update the driver: ")
+    new_driver_name = input("Enter the name of the new driver: ")
+    bus = session.query(Bus).filter_by(plate_number=plate_number).first()
+    driver = session.query(Driver).filter_by(name=new_driver_name).first()
 
-#     if bus:
-#         if driver:
-#             bus.driver = driver
-#             session.commit()
-#             print("Bus driver updated successfully!")
-#         else:
-#             print("Driver not found!")
-#     else:
-#         print("Bus not found!")
+    if bus:
+        if driver:
+            bus.driver = driver
+            session.commit()
+            print("Bus driver updated successfully!")
+        else:
+            print("Driver not found!")
+    else:
+        print("Bus not found!")
 
 def display_all_drivers():
     drivers = session.query(Driver).all()
