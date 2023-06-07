@@ -45,10 +45,18 @@ def main():
         print("*** Waste Disposal Management ***")
         print("1) Waste-Management DBMS Menu")
         print("2) Reports")
-        choice = int(input())
+
+        while True:
+                try:
+                    choice = int(input("Enter your choice: "))
+                    if choice not in [1, 2]:
+                        raise ValueError
+                    break
+                except ValueError:
+                    print("Invalid choice. Please try again.")
 
         if choice == 1:
-            print("*** Waste Disposal Management ***")
+            print("*** Waste-Management DBMS Menu ***")
             print("1) Add a bus")
             print("2) Lookup a bus")
             print("3) Update a bus plate number")
@@ -111,9 +119,6 @@ def main():
                 print("Quitting Program")
                 break
 
-            else:
-                print("Invalid choice. Please try again.")
-
         elif choice == 2:
 
             print("*** Report Generation ***")
@@ -124,11 +129,16 @@ def main():
 
         if sub_choice == 1:
             generate_busiest_driver_report()
+            break
+
         elif sub_choice == 2:
             generate_most_active_buses_report()
+            break
+
         elif sub_choice == 3:
             print("Returning to the main menu.")
             break
+
         else:
             print("Invalid choice. Please try again.")
 
