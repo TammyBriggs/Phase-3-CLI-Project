@@ -164,48 +164,55 @@ def main():
 
 #CLI Waste-Management DBMS Menu Methods
 def add_bus():
-    plate_number = input("Enter the plate number of the bus: ")
-    
-    # Check if the bus with the given plate number already exists
-    existing_bus = session.query(Bus).filter_by(plate_number=plate_number).first()
-    if existing_bus:
-        print("Error: Bus with the same plate number already exists!")
-        return
+    buses = []
 
-    driver_name = input("Enter the name of the driver: ")
+    while True:
+        plate_number = input("Enter the plate number of the bus (or 'q' to quit): ")
+        if plate_number == 'q':
+            break
 
-    # Check if the driver is already assigned to three buses
-    driver = session.query(Driver).filter_by(name=driver_name).first()
-    if driver:
-        assigned_buses_count = session.query(Bus).filter_by(driver=driver).count()
-        if assigned_buses_count >= 3:
-            print("Error: The driver is already assigned to three buses!")
-            return
-    else:
-        driver = Driver(name=driver_name)
-        session.add(driver)
+        # Check if the bus with the given plate number already exists
+        existing_bus = session.query(Bus).filter_by(plate_number=plate_number).first()
+        if existing_bus:
+            print(f"Error: Bus with the plate number '{plate_number}' already exists!")
+            continue
+
+        driver_name = input("Enter the name of the driver: ")
+
+        # Check if the driver is already assigned to three buses
+        driver = session.query(Driver).filter_by(name=driver_name).first()
+        if driver:
+            assigned_buses_count = session.query(Bus).filter_by(driver=driver).count()
+            if assigned_buses_count >= 3:
+                print(f"Error: The driver '{driver_name}' is already assigned to three buses!")
+                continue
+        else:
+            driver = Driver(name=driver_name)
+            session.add(driver)
+            session.commit()
+
+        route_path = input("Enter the route path (e.g., here - here): ")
+
+        # Check if the route with the given path already exists
+        existing_route = session.query(Route).filter_by(path=route_path).first()
+        if existing_route:
+            print(f"Error: Route with the path '{route_path}' already exists!")
+            continue
+
+        route = Route(path=route_path)
+        session.add(route)
         session.commit()
 
-    route_path = input("Enter the route path (e.g., here - here): ")
-    
-    # Check if the route with the given path already exists
-    existing_route = session.query(Route).filter_by(path=route_path).first()
-    if existing_route:
-        print("Error: Route with the same path already exists!")
-        return
+        now = datetime.utcnow()
+        datetime_str = now.strftime("%Y-%m-%d %H:%M")
+        bus = Bus(plate_number=plate_number, route=route, driver=driver, datetime=datetime_str)
+        buses.append(bus)
 
-    route = Route(path=route_path)
-    session.add(route)
+    session.add_all(buses)
     session.commit()
 
-    now = datetime.utcnow()
-    # A *tuple* is used as an argument to the strftime() method to specify the desired format for the datetime string. 
-    datetime_str = now.strftime("%Y-%m-%d %H:%M")
-    bus = Bus(plate_number=plate_number, route=route, driver=driver, datetime=datetime_str)
-    session.add(bus)
-    session.commit()
-
-    print("Bus added successfully!")
+    if plate_number != 'q':
+        print("Buses added successfully!")
 
 def lookup_bus():
     plate_number = input("Enter the plate number of the bus to lookup: ")
