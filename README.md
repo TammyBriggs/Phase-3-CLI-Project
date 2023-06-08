@@ -1,11 +1,13 @@
 # Phase-3-CLI-Project
 
-# Waste Disposal Management DBMS
+# Waste Disposal Management DBMS oversees the smooth running of a waste disposal management company, 09/06/2023
 
+#### By **Tamunotonye Briggs**
+
+## Description
 This program is a Waste Disposal Management Database Management System (DBMS) implemented using Python and SQLAlchemy. It allows you to manage buses, routes, and drivers involved in waste management operations.
 
 ## Features
-
 - Add a bus: Add a new bus to the system by providing the plate number, driver name, and route path.
 - Lookup a bus: Find detailed information about a specific bus using its plate number.
 - Update a bus plate number: Update the plate number of a bus.
@@ -22,13 +24,11 @@ This program is a Waste Disposal Management Database Management System (DBMS) im
   - Generate a report on the date with the most active buses.
 
 ## Getting Started
-
 1. Clone the repository: `git clone <repository_url>`
 2. Install the required dependencies: `pip install -r requirements.txt`
 3. Run the program: `python main.py`
 
 ## Usage
-
 Upon running the program, a menu will be displayed with various options. Use the provided numbers to select an option and interact with the system.
 
 For example, to add a new bus:
