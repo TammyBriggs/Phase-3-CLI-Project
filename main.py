@@ -199,6 +199,7 @@ def add_bus():
     session.commit()
 
     now = datetime.utcnow()
+    # A *tuple* is used as an argument to the strftime() method to specify the desired format for the datetime string. 
     datetime_str = now.strftime("%Y-%m-%d %H:%M")
     bus = Bus(plate_number=plate_number, route=route, driver=driver, datetime=datetime_str)
     session.add(bus)
