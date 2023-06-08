@@ -365,10 +365,10 @@ def day_with_most_active_buses():
     # Extract the date from the datetime field of each bus
     bus_dates = [bus.datetime.split()[0] for bus in buses]
 
-    # Use Counter to count the occurrences of each date
+    # Use Counter to count the occurrences of each date in the bus_dates *list*
     date_counts = Counter(bus_dates)
 
-    # Find the date with the maximum count
+    # Find the date with the maximum count value in the date_counts *dictionary*
     most_active_date = max(date_counts, key=date_counts.get)
     active_bus_count = date_counts[most_active_date]
 
