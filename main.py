@@ -70,7 +70,6 @@ def main():
             print("10) Update a bus driver")
             print("11) Display all drivers")
             print("12) Quit")
-            # choice = int(input())
 
             while True:
                 try:
@@ -204,6 +203,7 @@ def add_bus():
         session.commit()
 
         now = datetime.utcnow()
+        # A *tuple* is used as an argument to the strftime() method to specify the desired format for the datetime string. 
         datetime_str = now.strftime("%Y-%m-%d %H:%M")
         bus = Bus(plate_number=plate_number, route=route, driver=driver, datetime=datetime_str)
         buses.append(bus)
@@ -261,7 +261,6 @@ def delete_bus():
         print("Bus and associated driver and route deleted successfully!")
     else:
         print("Error: Bus not found!")
-
 
 def display_all_buses():
     buses = session.query(Bus).all()
