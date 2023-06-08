@@ -170,6 +170,10 @@ def add_bus():
         if plate_number == 'q':
             break
 
+        if not plate_number:
+            print("Error: Plate number cannot be empty!")
+            continue
+
         # Check if the bus with the given plate number already exists
         existing_bus = session.query(Bus).filter_by(plate_number=plate_number).first()
         if existing_bus:
@@ -177,6 +181,10 @@ def add_bus():
             continue
 
         driver_name = input("Enter the name of the driver: ")
+        
+        if not driver_name:
+            print("Error: Driver name cannot be empty!")
+            continue
 
         # Check if the driver is already assigned to three buses
         driver = session.query(Driver).filter_by(name=driver_name).first()
@@ -192,6 +200,10 @@ def add_bus():
 
         route_path = input("Enter the route path (e.g., here - here): ")
 
+        if not route_path:
+            print("Error: Route path cannot be empty!")
+            continue
+
         # Check if the route with the given path already exists
         existing_route = session.query(Route).filter_by(path=route_path).first()
         if existing_route:
@@ -203,7 +215,6 @@ def add_bus():
         session.commit()
 
         now = datetime.utcnow()
-        # A *tuple* is used as an argument to the strftime() method to specify the desired format for the datetime string. 
         datetime_str = now.strftime("%Y-%m-%d %H:%M")
         bus = Bus(plate_number=plate_number, route=route, driver=driver, datetime=datetime_str)
         buses.append(bus)
@@ -234,6 +245,11 @@ def update_bus_plate_number():
 
     if bus:
         new_plate_number = input("Enter the new plate number: ")
+        
+        if not new_plate_number:
+            print("Error: New plate number cannot be empty!")
+            return
+
         bus_with_new_plate = session.query(Bus).filter_by(plate_number=new_plate_number).first()
 
         if bus_with_new_plate:
@@ -302,6 +318,11 @@ def update_route():
         return
 
     new_route_path = input("Enter the new route path: ")
+
+    if not new_route_path:
+        print("Error: New route path cannot be empty!")
+        return
+    
     existing_route = session.query(Route).filter_by(path=new_route_path).first()
 
     if existing_route:
@@ -336,6 +357,9 @@ def update_driver():
 
     if driver:
         new_driver_name = input("Enter the new driver name: ")
+        if new_driver_name.strip() == '':
+            print("Error: Empty field! Please enter a valid driver name.")
+            return
         if driver_name == new_driver_name:
             print("Error: The new driver name is the same as the existing name!")
             return
